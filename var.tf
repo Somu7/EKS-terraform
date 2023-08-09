@@ -26,6 +26,7 @@ variable "azs" {
 }
 
 variable "os_name" {
+  type = string
   default = "ami-0ded8326293d3201b"
 }
 variable "key_name" {
@@ -33,5 +34,6 @@ variable "key_name" {
   
 }
 variable "instance_type" {
-    default = "t2.medium" 
+  type = string
+  default = "t2.micro" 
 }

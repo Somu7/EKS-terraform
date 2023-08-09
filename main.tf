@@ -37,16 +37,6 @@ resource "aws_subnet" "private_subnets" {
    Name = "Private Subnet ${count.index + 1}"
  }
 }
-
-# create an EC2 instance
-resource "aws_instance" "eks-master1" {
-   ami                    = var.os_name
-   instance_type          = var.instance_type
-   associate_public_ip_address = true
- #  subnet_id              = aws_subnet.subnet.id
- #  vpc_security_group_ids = sg-03cde4e562a7e79b3
- }
-
 # creating a internet gatewat
 
 resource "aws_internet_gateway" "gw" {
@@ -80,5 +70,13 @@ resource "aws_route_table_association" "public_subnet_asso" {
  subnet_id      = element(aws_subnet.public_subnets[*].id, count.index)
  route_table_id = aws_route_table.second_rt.id
 }
-
+# create an EC2 instance
+resource "aws_instance" "eks-master1" {
+   ami                    = var.os_name
+   instance_type          = var.instance_type
+   associate_public_ip_address = true
+   subnet_id              = "{element(aws_subnet.private_subnet.*.id, count.index)}"
+   availability_zone = "{element(aws_subnet.private_subnet.*.id, count.index)}"
+ #  vpc_security_group_ids = sg-03cde4e562a7e79b3
+ }
 

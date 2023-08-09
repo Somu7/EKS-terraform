@@ -75,8 +75,8 @@ resource "aws_instance" "eks-master1" {
    ami                    = var.os_name
    instance_type          = var.instance_type
    associate_public_ip_address = true
-   subnet_id              = "{element(aws_subnet.private_subnet.*.id, count.index)}"
-   availability_zone = "{element(aws_subnet.private_subnet.*.id, count.index)}"
+ # subnet_id              = "${element(aws_subnet.private_subnet.*.id, count.index)}"
+ # availability_zone = length(var.availability_zones)
  #  vpc_security_group_ids = sg-03cde4e562a7e79b3
  }
 
